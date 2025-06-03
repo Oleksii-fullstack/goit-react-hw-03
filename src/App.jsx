@@ -36,7 +36,6 @@ const App = () => {
   return (
     <Section>
       <Container>
-        <h1>Phonebook</h1>
         <ContactForm onSubmit={addContact} />
         <SearchBox handleChangeFilter={handleChangeFilter} />
         <ContactList

@@ -1,33 +1,54 @@
-import { useState } from "react";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
 import s from "./ContactForm.module.css";
 
+const ContactFormValidationSchema = Yup.object({
+  name: Yup.string().required().min(2).max(20),
+  number: Yup.string().required().min(5).max(13),
+});
+
 const ContactForm = ({ onSubmit }) => {
-  const [contact, setContact] = useState({
-    name: "",
-    number: "",
-  });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(contact);
-  };
-
-  const handleChange = (e) => {
-    setContact({ ...contact, [e.target.name]: e.target.value });
+  const handleSubmit = (values, actions) => {
+    onSubmit(values);
+    actions.resetForm();
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        <span>Name</span>
-        <input type="text" name="name" onChange={handleChange} />
-      </label>
-      <label>
-        <span>Number</span>
-        <input type="text" name="number" onChange={handleChange} />
-      </label>
-      <button type="submit">Add contact</button>
-    </form>
+    <Formik
+      initialValues={{
+        name: "",
+        number: "",
+      }}
+      validationSchema={ContactFormValidationSchema}
+      onSubmit={handleSubmit}
+    >
+      <Form className={s.form}>
+        <h1 className={s.title}>Phonebook</h1>
+        <label>
+          <span>Name</span>
+          <Field
+            className={s.input}
+            type="text"
+            name="name"
+            placeholder="type your name here"
+          />
+          <ErrorMessage component={"p"} name="name" />
+        </label>
+        <label>
+          <span>Number</span>
+          <Field
+            className={s.input}
+            type="text"
+            name="number"
+            placeholder="type your number here"
+          />
+          <ErrorMessage component={"p"} name="number" />
+        </label>
+        <button className={s.button} type="submit">
+          Add contact
+        </button>
+      </Form>
+    </Formik>
   );
 };
 
