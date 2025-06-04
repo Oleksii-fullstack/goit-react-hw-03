@@ -24,7 +24,7 @@ const ContactForm = ({ onSubmit }) => {
     >
       <Form className={s.form}>
         <h1 className={s.title}>Phonebook</h1>
-        <label>
+        <label className={s.label}>
           <span>Name</span>
           <Field
             className={s.input}
@@ -32,9 +32,13 @@ const ContactForm = ({ onSubmit }) => {
             name="name"
             placeholder="type your name here"
           />
-          <ErrorMessage component={"p"} name="name" />
+          <ErrorMessage
+            className={s.errorMessage}
+            component={"p"}
+            name="name"
+          />
         </label>
-        <label>
+        <label className={s.label}>
           <span>Number</span>
           <Field
             className={s.input}
@@ -42,7 +46,11 @@ const ContactForm = ({ onSubmit }) => {
             name="number"
             placeholder="type your number here"
           />
-          <ErrorMessage component={"p"} name="number" />
+          <ErrorMessage
+            className={s.errorMessage}
+            component={"p"}
+            name="number"
+          />
         </label>
         <button className={s.button} type="submit">
           Add contact
